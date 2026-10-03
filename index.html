@@ -5,219 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية الشطرنج والمدرب الذكي</title>
     
-    <!-- مكتبة الشطرنج والأيقونات والخطوط -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chessboard CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
 
     <style>
-        :root {
-            --bg-main: #0d1117;
-            --card-bg: #161b22;
-            --accent-green: #238636;
-            --accent-blue: #1f6feb;
-            --text-main: #c9d1d9;
-            --border-color: #30363d;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
-
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Cairo', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
         }
-
-        header {
-            width: 100%;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        header h1 {
-            font-size: 22px;
-            color: #fff;
-        }
-
-        .main-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            max-width: 1000px;
-            width: 95%;
-            margin: 20px auto;
-            justify-content: center;
-        }
-
-        .board-box {
-            flex: 1;
-            min-width: 320px;
-            max-width: 480px;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        #myBoard {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .controls-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        select, button {
-            flex: 1;
-            background-color: #21262d;
-            color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 14px;
-        }
-
-        button:hover, select:hover {
-            border-color: #8b949e;
-        }
-
-        .btn-blue { background-color: var(--accent-blue); }
-        .btn-blue:hover { background-color: #388bfd; }
-
-        .btn-green { background-color: var(--accent-green); }
-        .btn-green:hover { background-color: #2ea44f; }
-
-        .side-box {
-            flex: 1;
-            min-width: 300px;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .panel-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .panel-card h3 {
-            color: #58a6ff;
-            font-size: 16px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .coach-display {
-            background: #0d1117;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            min-height: 110px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        #moveHistory {
-            max-height: 120px;
-            overflow-y: auto;
-            font-size: 13px;
-            color: #8b949e;
-            background: #0d1117;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            word-wrap: break-word;
-        }
-
-        @media (max-width: 600px) {
-            .main-container { flex-direction: column; align-items: center; }
-            .board-box, .side-box { width: 100%; max-width: 100%; }
+        /* إصلاح استجابة رقعة الشطرنج على الموبايل */
+        .board-container .square-52243 {
+            border: none;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center p-4">
 
-    <header>
-        <h1><i class="fa-solid fa-chess"></i> أكاديمية الشطرنج والمدرب الذكي</h1>
+    <!-- Header -->
+    <header class="w-full max-w-4xl bg-[#161b22] border border-[#30363d] rounded-xl p-4 mb-6 text-center shadow-lg">
+        <h1 class="text-2xl font-bold text-white flex items-center justify-center gap-3">
+            <i class="fa-solid fa-chess text-amber-500"></i>
+            أكاديمية الشطرنج والمدرب الذكي
+        </h1>
     </header>
 
-    <div class="main-container">
+    <!-- Main Container -->
+    <main class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-12 gap-6">
         
-        <!-- لوحة الشطرنج والأزرار -->
-        <div class="board-box">
-            <div id="myBoard"></div>
+        <!-- Chess Board Section -->
+        <section class="md:col-span-7 bg-[#161b22] border border-[#30363d] rounded-xl p-4 flex flex-col items-center shadow-md">
+            <div id="myBoard" class="w-full max-w-[420px] rounded-lg overflow-hidden shadow-2xl board-container"></div>
             
-            <div class="controls-row">
-                <select id="gameMode" onchange="resetGame()">
-                    <option value="ai">لعب ضد الكمبيوتر (AI)</option>
-                    <option value="pvp">لاعب ضد لاعب (محلي)</option>
-                </select>
+            <!-- Game Controls -->
+            <div class="w-full max-w-[420px] mt-4 space-y-3">
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="gameMode" onchange="resetGame()" class="bg-[#21262d] text-white border border-[#30363d] rounded-lg p-2.5 text-sm font-semibold focus:outline-none focus:border-blue-500">
+                        <option value="ai">لعب ضد الذكاء الاصطناعي</option>
+                        <option value="pvp">لاعب ضد لاعب (محلي)</option>
+                    </select>
 
-                <select id="difficulty">
-                    <option value="1">مبتدئ</option>
-                    <option value="5" selected>متوسط</option>
-                    <option value="10">محترف</option>
-                </select>
+                    <select id="difficulty" class="bg-[#21262d] text-white border border-[#30363d] rounded-lg p-2.5 text-sm font-semibold focus:outline-none focus:border-blue-500">
+                        <option value="1">مبتدئ</option>
+                        <option value="5" selected>متوسط</option>
+                        <option value="10">محترف</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="resetGame()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-lg text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> جديد
+                    </button>
+                    <button onclick="undoMove()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-lg text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-backward"></i> تراجع
+                    </button>
+                    <button onclick="askCoach()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-3 rounded-lg text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-brain"></i> المدرب
+                    </button>
+                </div>
             </div>
+        </section>
 
-            <div class="controls-row">
-                <button class="btn-green" onclick="resetGame()"><i class="fa-solid fa-rotate-right"></i> لعبة جديدة</button>
-                <button onclick="undoMove()"><i class="fa-solid fa-backward"></i> تراجع</button>
-                <button class="btn-blue" onclick="askCoach()"><i class="fa-solid fa-brain"></i> نصيحة المدرب</button>
-            </div>
-        </div>
-
-        <!-- اللوحة الجانبية: المدرب والسجل -->
-        <div class="side-box">
+        <!-- AI Coach & Info Sidebar -->
+        <section class="md:col-span-5 flex flex-col gap-4">
             
-            <!-- المدرب الذكي -->
-            <div class="panel-card">
-                <h3><i class="fa-solid fa-robot"></i> المدرب الذكي (AI Coach)</h3>
-                <div class="coach-display" id="coachText">
-                    مرحباً بك! ابدأ اللعب وتحريك القطع، وفي أي وقت اضغط على <b>"نصيحة المدرب"</b> لأقوم بتحليل موقفك وإعطائك أفضل نقلة.
+            <!-- AI Coach Display -->
+            <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 shadow-md">
+                <h2 class="text-blue-400 font-bold text-lg mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-robot"></i> المدرب الذكي (AI Coach)
+                </h2>
+                <div id="coachText" class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3 text-sm min-h-[120px] leading-relaxed">
+                    مرحباً بك يا أحمد! ابدأ اللعب وتحريك القطع، وفي أي وقت اضغط على <b>"المدرب"</b> لأقوم بتحليل موقفك وإعطائك أفضل نقلة.
                 </div>
             </div>
 
-            <!-- سجل النقلات -->
-            <div class="panel-card">
-                <h3><i class="fa-solid fa-list-ol"></i> سجل التحركات</h3>
-                <div id="moveHistory">لا توجد تحركات بعد.</div>
+            <!-- Move History -->
+            <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 shadow-md">
+                <h2 class="text-blue-400 font-bold text-lg mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-list-ol"></i> سجل النقلات
+                </h2>
+                <div id="moveHistory" class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3 text-xs text-gray-400 h-[120px] overflow-y-auto leading-relaxed">
+                    لا توجد تحركات بعد.
+                </div>
             </div>
 
-        </div>
+        </section>
 
-    </div>
+    </main>
 
-    <!-- المكتبات الخارجية -->
+    <!-- External Libraries JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
-    
-    <!-- الملف البرمجي الخاص بنا -->
-    <script src="script.js"></script>
+
+    <!-- Game Logic JS -->
+    <script>
+        let board = null;
+        let game = new Chess();
+
+        const coachText = document.getElementById('coachText');
+        const moveHistory = document.getElementById('moveHistory');
+
+        function onDragStart(source, piece, position, orientation) {
+            if (game.game_over()) return false;
+
+            const mode = document.getElementById('gameMode').value;
+            if (mode === 'ai' && game.turn() === 'b') return false;
+
+            if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
+        }
+
+        function makeAIMove() {
+            if (game.game_over()) return;
+
+            const depth = document.getElementById('difficulty').value;
+            const fen = game.fen();
+
+            fetch(`https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=${depth}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.bestmove) {
+                        const bestMove = data.bestmove.split(' ')[1];
+                        const from = bestMove.substring(0, 2);
+                        const to = bestMove.substring(2, 4);
+                        const promotion = bestMove.length > 4 ? bestMove.substring(4, 5) : 'q';
+
+                        game.move({ from: from, to: to, promotion: promotion });
+                        board.position(game.fen());
+                        updateStatus();
+                    } else {
+                        makeRandomMove();
+                    }
+                })
+                .catch(() => makeRandomMove());
+        }
+
+        function makeRandomMove() {
+            const possibleMoves = game.moves();
+            if (possibleMoves.length === 0) return;
+            const randomIdx = Math.floor(Math.random() * possibleMoves.length);
+            game.move(possibleMoves[randomIdx]);
+            board.position(game.fen());
+            updateStatus();
+        }
+
+        function onDrop(source, target) {
+            const move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q'
+            });
+
+            if (move === null) return 'snapback';
+
+            updateStatus();
+
+            const mode = document.getElementById('gameMode').value;
+            if (mode === 'ai' && !game.game_over()) {
+                window.setTimeout(makeAIMove, 250);
+            }
+        }
+
+        function onSnapEnd() {
+            board.position(game.fen());
+        }
+
+        function updateStatus() {
+            const history = game.history();
+            moveHistory.innerHTML = history.length ? history.join(', ') : 'لا توجد تحركات بعد.';
+
+            if (game.in_checkmate()) {
+                coachText.innerHTML = "<b>كش مات! 🎉</b> انتهت اللعبة.";
+            } else if (game.in_draw()) {
+                coachText.innerHTML = "<b>تعادل! 🤝</b>";
+            } else if (game.in_check()) {
+                coachText.innerHTML = "<b>⚠️ تنبيه: كش ملك!</b>";
+            }
+        }
+
+        function askCoach() {
+            if (game.game_over()) {
+                coachText.innerHTML = "اللعبة منتهية حالياً!";
+                return;
+            }
+
+            coachText.innerHTML = "جاري تحليل الموقف الحالي بواسطة الذكاء الاصطناعي... ⏳";
+
+            const fen = game.fen();
+            fetch(`https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=10`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const bestMove = data.bestmove.split(' ')[1];
+                        const mate = data.mate;
+                        const evalVal = (data.evaluation !== undefined) ? (data.evaluation / 100).toFixed(1) : 0;
+
+                        let advice = `<b>💡 اقتراح المدرب:</b> أفضل نقلة لك الآن هي <b>${bestMove}</b>.<br>`;
+                        advice += `<b>📊 التقييم:</b> موقفك يعادل (${evalVal > 0 ? '+' + evalVal : evalVal}).`;
+
+                        if (mate) {
+                            advice += `<br><b>🎯 كش مات قريب:</b> هناك كش مات خلال ${Math.abs(mate)} نقلات!`;
+                        }
+
+                        coachText.innerHTML = advice;
+                    } else {
+                        coachText.innerHTML = "تعذر الحصول على تحليل حالياً.";
+                    }
+                })
+                .catch(() => {
+                    coachText.innerHTML = "حدث خطأ أثناء الاتصال بالمدرب الذكي.";
+                });
+        }
+
+        function undoMove() {
+            game.undo();
+            const mode = document.getElementById('gameMode').value;
+            if (mode === 'ai') game.undo();
+            board.position(game.fen());
+            updateStatus();
+        }
+
+        function resetGame() {
+            game.reset();
+            board.start();
+            coachText.innerHTML = "بدأت لعبة جديدة! حظاً موفقاً ♟️";
+            updateStatus();
+        }
+
+        const config = {
+            draggable: true,
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd,
+            pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+        };
+
+        board = Chessboard('myBoard', config);
+        $(window).resize(board.resize);
+    </script>
 </body>
 </html>
