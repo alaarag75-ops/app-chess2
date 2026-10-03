@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية الشطرنج والمدرب الذكي</title>
+    
+    <!-- مكتبة الشطرنج والأيقونات والخطوط -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0d1117;
+            --card-bg: #161b22;
+            --accent-green: #238636;
+            --accent-blue: #1f6feb;
+            --text-main: #c9d1d9;
+            --border-color: #30363d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 22px;
+            color: #fff;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1000px;
+            width: 95%;
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        .board-box {
+            flex: 1;
+            min-width: 320px;
+            max-width: 480px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        #myBoard {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        select, button {
+            flex: 1;
+            background-color: #21262d;
+            color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        button:hover, select:hover {
+            border-color: #8b949e;
+        }
+
+        .btn-blue { background-color: var(--accent-blue); }
+        .btn-blue:hover { background-color: #388bfd; }
+
+        .btn-green { background-color: var(--accent-green); }
+        .btn-green:hover { background-color: #2ea44f; }
+
+        .side-box {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .panel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .panel-card h3 {
+            color: #58a6ff;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coach-display {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            min-height: 110px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        #moveHistory {
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 13px;
+            color: #8b949e;
+            background: #0d1117;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 600px) {
+            .main-container { flex-direction: column; align-items: center; }
+            .board-box, .side-box { width: 100%; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-chess"></i> أكاديمية الشطرنج والمدرب الذكي</h1>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- لوحة الشطرنج والأزرار -->
+        <div class="board-box">
+            <div id="myBoard"></div>
+            
+            <div class="controls-row">
+                <select id="gameMode" onchange="resetGame()">
+                    <option value="ai">لعب ضد الكمبيوتر (AI)</option>
+                    <option value="pvp">لاعب ضد لاعب (محلي)</option>
+                </select>
+
+                <select id="difficulty">
+                    <option value="1">مبتدئ</option>
+                    <option value="5" selected>متوسط</option>
+                    <option value="10">محترف</option>
+                </select>
+            </div>
+
+            <div class="controls-row">
+                <button class="btn-green" onclick="resetGame()"><i class="fa-solid fa-rotate-right"></i> لعبة جديدة</button>
+                <button onclick="undoMove()"><i class="fa-solid fa-backward"></i> تراجع</button>
+                <button class="btn-blue" onclick="askCoach()"><i class="fa-solid fa-brain"></i> نصيحة المدرب</button>
+            </div>
+        </div>
+
+        <!-- اللوحة الجانبية: المدرب والسجل -->
+        <div class="side-box">
+            
+            <!-- المدرب الذكي -->
+            <div class="panel-card">
+                <h3><i class="fa-solid fa-robot"></i> المدرب الذكي (AI Coach)</h3>
+                <div class="coach-display" id="coachText">
+                    مرحباً بك! ابدأ اللعب وتحريك القطع، وفي أي وقت اضغط على <b>"نصيحة المدرب"</b> لأقوم بتحليل موقفك وإعطائك أفضل نقلة.
+                </div>
+            </div>
+
+            <!-- سجل النقلات -->
+            <div class="panel-card">
+                <h3><i class="fa-solid fa-list-ol"></i> سجل التحركات</h3>
+                <div id="moveHistory">لا توجد تحركات بعد.</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- المكتبات الخارجية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    
+    <!-- الملف البرمجي الخاص بنا -->
+    <script src="script.js"></script>
+</body>
+</html>
